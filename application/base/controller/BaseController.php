@@ -22,4 +22,13 @@ class BaseController extends Controller
             "data" => $data
         ]);
     }
+
+    public function createToken($id)
+    {
+        $v = 1;
+        $key = mt_rand();
+        $hash = hash_hmac("sha1", $v . mt_rand() . time(), $key, true);
+        $token = str_replace('=', '', strtr(base64_encode($hash), '+/', '-_'));
+        return $token.$id;
+    }
 }
